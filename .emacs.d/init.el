@@ -1,5 +1,6 @@
 (require 'cl)
 (setq inhibit-startup-screen t)
+(cd "~/")
 
 ;; function (add load-path)
 (defun add-to-load-path (&rest paths)
@@ -18,6 +19,14 @@
 ;(require 'init-loader)
 ;(init-loader-load "~/.emacs.d/conf")
 
+;;
+;; package.el
+;;
+(when (require 'package nil t)
+  (add-to-list 'package-archives
+               '("marmalade" . "http://marmalade-repo.org/packages/"))
+  (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
+  (package-initialize))
 
 ;;
 ;; keybind
@@ -25,7 +34,7 @@
 (global-set-key (kbd "C-m") 'newline-and-indent)
 (keyboard-translate ?\C-h ?\C-?)
 (global-set-key (kbd "C-t") 'other-window)
-
+(define-key global-map (kbd "C-c l") 'toggle-truncate-lines)
 
 ;;
 ;; locale
@@ -35,7 +44,6 @@
 (when (eq window-system 'w32)
   (set-file-name-coding-system 'cp932)
   (setq locale-coding-system 'cp932))
-
 
 ;;
 ;; display
@@ -95,3 +103,47 @@
   (global-set-key (kbd "C-.") 'redo)
   (global-set-key (kbd "C-\\") 'undo))
 
+;;
+;; anything
+;; (auto-install-batch "anything")
+(when (require 'anything nil t)
+  (setq
+   anything-idle-delay 0.3             ;default 0.5
+   anything-input-idle-delay 0.2       ;default 0.1
+   anything-candidate-number-limit 100 ;default 50
+   anything-quick-update t
+   anything-enable-shortcuts 'alphabet)
+
+  (when (require 'anything-config nil t)
+    (setq anything-su-or-sudo "sudo"))
+
+  (require 'anything-match-plugin nil t)
+
+  (when (and (executable-find "cmigemo")
+             (require 'migemo nil t))
+    (require 'anything0migemo nil t))
+
+  (when (require 'anything-complete nil t)
+    (anything-lisp-complete-symbol-set-timer 150))
+
+  (require 'anything-show-completion nil t)
+
+  (when (require 'auto-install nil t)
+    (require 'anything-auto-install nil t))
+
+  (when (require 'descbinds-anything nil t)
+    (descbinds-anything-install)))
+
+;;
+;; auto-complete
+;;
+(when (require 'auto-complete-config nil t)
+  (add-to-list 'ac-dictionary-directories
+               "~/.emacs.d/elisp/ac-dict")
+  (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
+  (ac-config-default))
+
+;;
+;; wgrep
+;;
+(require 'wgrep nil t)
