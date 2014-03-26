@@ -29,6 +29,12 @@
   (package-initialize))
 
 ;;
+;; menu/tool bar
+;;
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+
+;;
 ;; keybind
 ;;
 (global-set-key (kbd "C-m") 'newline-and-indent)
