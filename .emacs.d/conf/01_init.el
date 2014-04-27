@@ -48,11 +48,11 @@
 ;;
 ;; locale
 ;;
-(set-language-environment "Japanese")
-(prefer-coding-system 'utf-8)
-(when (eq window-system 'w32)
-  (set-file-name-coding-system 'cp932)
-  (setq locale-coding-system 'cp932))
+;; (set-language-environment "Japanese")
+;; (prefer-coding-system 'utf-8)
+;; (when (eq window-system 'w32)
+;;   (set-file-name-coding-system 'cp932)
+;;   (setq locale-coding-system 'cp932))
 
 ;;
 ;; display
