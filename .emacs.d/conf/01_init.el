@@ -196,3 +196,7 @@
 ;; (add-to-list 'flymake-err-line-patterns
 ;;              '("\\(.*\\):(\\([0-9]+\\)): \\(.*\\)" 1 2 nil 3))
 
+;;
+;; magit
+;;
+(require 'magit)
